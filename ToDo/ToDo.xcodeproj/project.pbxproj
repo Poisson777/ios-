@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE4F902523E7FDCB00CE732D /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4F902423E7FDCB00CE732D /* TableViewCell.swift */; };
 		EE590D6023D4756E00FB0540 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE590D5F23D4756E00FB0540 /* AppDelegate.swift */; };
 		EE590D6223D4756E00FB0540 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE590D6123D4756E00FB0540 /* SceneDelegate.swift */; };
 		EE590D6423D4756E00FB0540 /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE590D6323D4756E00FB0540 /* ToDoViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE4F902423E7FDCB00CE732D /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		EE590D5C23D4756E00FB0540 /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE590D5F23D4756E00FB0540 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE590D6123D4756E00FB0540 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				EE590D6D23D4757100FB0540 /* Info.plist */,
 				EEB0471C23D5978000C82F9E /* DoneItem.swift */,
 				EE9B6F1623D8130B005EB714 /* EditAddingItemDetailViewController.swift */,
+				EE4F902423E7FDCB00CE732D /* TableViewCell.swift */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				EE590D6423D4756E00FB0540 /* ToDoViewController.swift in Sources */,
 				EE590D6023D4756E00FB0540 /* AppDelegate.swift in Sources */,
 				EEB0471D23D5978000C82F9E /* DoneItem.swift in Sources */,
+				EE4F902523E7FDCB00CE732D /* TableViewCell.swift in Sources */,
 				EE9B6F1723D8130B005EB714 /* EditAddingItemDetailViewController.swift in Sources */,
 				EE590D6223D4756E00FB0540 /* SceneDelegate.swift in Sources */,
 			);

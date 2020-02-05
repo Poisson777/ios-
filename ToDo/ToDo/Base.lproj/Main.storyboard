@@ -20,13 +20,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="ux8-7B-B4E">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="ux8-7B-B4E" customClass="TableViewCell" customModule="ToDo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ux8-7B-B4E" id="XKT-jJ-6ey">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="CE7-3q-vH4" kind="show" identifier="EditItem" id="8mG-9R-76Y"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -41,7 +44,7 @@
                                             <rect key="frame" x="33" y="5" width="300" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="namePhonePad" keyboardAppearance="light" returnKeyType="go"/>
                                             <connections>
                                                 <outlet property="delegate" destination="BYZ-38-t0r" id="qFm-Pk-7sy"/>
                                             </connections>
@@ -50,7 +53,7 @@
                                             <rect key="frame" x="0.0" y="10" width="25" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <connections>
-                                                <segue destination="CE7-3q-vH4" kind="show" identifier="AddItem" id="26L-Tq-iCa"/>
+                                                <action selector="clickAddButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="sgK-ug-wu6"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -67,11 +70,12 @@
                         <outlet property="AddButton" destination="dqq-4G-w0L" id="eQJ-nv-ZI7"/>
                         <outlet property="AddTitle" destination="4lY-nd-ES3" id="wkg-Jc-N6c"/>
                         <outlet property="FirstTableView" destination="6Rz-EK-4uF" id="erB-Wv-iS5"/>
+                        <segue destination="CE7-3q-vH4" kind="show" identifier="AddItem" id="Bf2-PU-v5U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-717.39130434782612" y="216.96428571428569"/>
+            <point key="canvasLocation" x="-459" y="217"/>
         </scene>
         <!--编辑-->
         <scene sceneID="r5K-gH-KA2">
@@ -88,7 +92,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="done" destination="CE7-3q-vH4" eventType="editingDidEnd" id="M56-qI-4QQ"/>
+                                    <action selector="done" destination="CE7-3q-vH4" eventType="editingDidEndOnExit" id="vVi-cr-Hhr"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P17-6y-JHx">
@@ -135,17 +139,18 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="zpQ-2C-gdL">
                             <connections>
-                                <action selector="done" destination="CE7-3q-vH4" id="tv6-q1-48K"/>
+                                <action selector="done" destination="CE7-3q-vH4" id="SOh-cZ-YPk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="Vfe-FW-d2k" id="Dpp-1p-QVs"/>
                         <outlet property="textField" destination="jGt-9b-tIJ" id="ufc-3d-kqU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IkI-SI-o2K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="101" y="206"/>
+            <point key="canvasLocation" x="477" y="217"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eVm-ua-Wto">
@@ -166,4 +171,7 @@
             <point key="canvasLocation" x="-1430" y="217"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="8mG-9R-76Y"/>
+    </inferredMetricsTieBreakers>
 </document>
