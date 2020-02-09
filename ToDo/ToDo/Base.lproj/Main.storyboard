@@ -34,24 +34,36 @@
                                 </prototypes>
                             </tableView>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mz7-Cg-6bP">
-                                <rect key="frame" x="20" y="91" width="366" height="44"/>
+                                <rect key="frame" x="0.0" y="91" width="394" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Mz7-Cg-6bP" id="3de-uU-Pq0">
-                                    <rect key="frame" x="0.0" y="0.0" width="366" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="394" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入待办事项标题" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4lY-nd-ES3">
-                                            <rect key="frame" x="33" y="5" width="300" height="34"/>
+                                            <rect key="frame" x="66" y="5" width="320" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <textInputTraits key="textInputTraits" keyboardType="namePhonePad" keyboardAppearance="light" returnKeyType="go"/>
                                             <connections>
                                                 <outlet property="delegate" destination="BYZ-38-t0r" id="qFm-Pk-7sy"/>
                                             </connections>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqq-4G-w0L">
-                                            <rect key="frame" x="0.0" y="10" width="25" height="24"/>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqq-4G-w0L">
+                                            <rect key="frame" x="20" y="-8" width="60" height="60"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal">
+                                                <attributedString key="attributedTitle">
+                                                    <fragment content="+">
+                                                        <attributes>
+                                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <font key="NSFont" size="40" name="PTMono-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                            </state>
                                             <connections>
                                                 <action selector="clickAddButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="sgK-ug-wu6"/>
                                             </connections>
@@ -75,7 +87,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-459" y="217"/>
+            <point key="canvasLocation" x="-459.4202898550725" y="216.96428571428569"/>
         </scene>
         <!--编辑-->
         <scene sceneID="r5K-gH-KA2">
@@ -144,6 +156,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="Donebutton" destination="zpQ-2C-gdL" id="srA-5o-0rq"/>
+                        <outlet property="chooseView" destination="P17-6y-JHx" id="Hh8-Cz-Xb1"/>
                         <outlet property="datePicker" destination="Vfe-FW-d2k" id="Dpp-1p-QVs"/>
                         <outlet property="textField" destination="jGt-9b-tIJ" id="ufc-3d-kqU"/>
                     </connections>

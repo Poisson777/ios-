@@ -8,18 +8,19 @@
 
 import UIKit
 
-class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AddItemDetailViewControllerDelegate{
+
+class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AddItemDetailViewControllerDelegate,TimeCountDownDelegate{
+    
+    
+    @IBOutlet weak var AddButton: UIButton!
+    @IBOutlet weak var AddTitle: UITextField!
+    @IBOutlet weak var FirstTableView: UITableView!
     var ItemtoEdit:DoneItem?
     var doneItems:Dictionary<Int,[DoneItem]> = [
         0:[],1:[]]
-    let doneitem1 = DoneItem(name: "未完成1",LeftTime: 120)
-    let doneitem2 = DoneItem(name: "未完成2",LeftTime: 61)
+    let doneitem1 = DoneItem(name: "未完成1",LeftTime: 5)
+    let doneitem2 = DoneItem(name: "未完成2",LeftTime: 3)
     let undoneitem1=DoneItem(name:"已完成1",LeftTime: 0)
-    @IBOutlet weak var AddButton: UIButton!
-    
-    @IBOutlet weak var AddTitle: UITextField!
-    
-    @IBOutlet weak var FirstTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +30,10 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         doneItems[0]?.append(doneitem1)
         doneItems[0]?.append(doneitem2)
         doneItems[1]?.append(undoneitem1)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(TodoViewController.timerEvent), userInfo: nil, repeats:true)
         // Do any additional setup after loading the view.
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return doneItems[section]!.count
     }
@@ -83,6 +85,9 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard !textField.text!.isEmpty else {
+            return true
+        }
         clickAddButton()
         textField.resignFirstResponder()
         return true
@@ -129,5 +134,35 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         navigationController?.popViewController(animated: true)
     }
+    func MoveItem(_ CountDownFinishCell: TableViewCell, CountEndItem: DoneItem) {
+        print("1")
+        let Alert = UIAlertController(title: "Done", message: "\(CountEndItem.name) 倒计时已结束", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        Alert.addAction(okAction)
+        Alert.addAction(cancelAction)
+        present(Alert,animated: false,completion: nil)
+    }
     
+    var timer:Timer!
+    @objc func timerEvent(){
+        for item in doneItems[0]! {
+            if !item.TimeOut{
+                item.countDown()
+                if let index = doneItems[0]!.firstIndex(of:item){
+                    let indexPath = IndexPath(row:index,section: 0)
+                    let cell = FirstTableView.cellForRow(at: indexPath) as! TableViewCell
+                    cell.setValueForCell(item: item)
+                }
+                if item.leftTime <= 0{
+                    item.TimeOut = true
+                    let alert = UIAlertController(title: "Done", message: "\(item.name)倒计时已结束", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style:.default, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                    alert.addAction(okAction)
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true, completion: nil)}
+            }
+        }
+    }
 }

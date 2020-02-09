@@ -63,12 +63,12 @@
 			isa = PBXGroup;
 			children = (
 				EEB0471B23D57D2B00C82F9E /* New Group */,
-				EE590D6323D4756E00FB0540 /* ToDoViewController.swift */,
-				EE590D6523D4756E00FB0540 /* Main.storyboard */,
-				EE590D6D23D4757100FB0540 /* Info.plist */,
 				EEB0471C23D5978000C82F9E /* DoneItem.swift */,
 				EE9B6F1623D8130B005EB714 /* EditAddingItemDetailViewController.swift */,
+				EE590D6523D4756E00FB0540 /* Main.storyboard */,
 				EE4F902423E7FDCB00CE732D /* TableViewCell.swift */,
+				EE590D6323D4756E00FB0540 /* ToDoViewController.swift */,
+				EE590D6D23D4757100FB0540 /* Info.plist */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
