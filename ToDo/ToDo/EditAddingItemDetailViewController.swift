@@ -9,11 +9,11 @@
 import UIKit
 protocol AddItemDetailViewControllerDelegate:class {
     func AddItemDetailerViewControllerDidCancel(_ controller:EditAddingItemDetailViewController)
-    func AddItemDetailerController(_ controller:EditAddingItemDetailViewController,didFinishAdding item:DoneItem)
-    func AddItemDetailerController(_ controller:EditAddingItemDetailViewController,didFinishEditing item:DoneItem)
+    func AddItemDetailerController(_ controller:EditAddingItemDetailViewController,didFinishAdding item:Item)
+    func AddItemDetailerController(_ controller:EditAddingItemDetailViewController,didFinishEditing item:Item)
 }
 class EditAddingItemDetailViewController: UIViewController {
-    var ItemtoEdit:DoneItem?
+    var ItemtoEdit:Item?
     var TitletoAdd:String?
     var CircleColor:String?
     var colortoAdd:String = "white"
@@ -118,19 +118,21 @@ class EditAddingItemDetailViewController: UIViewController {
     }
     @IBAction func done(){
         if let item = ItemtoEdit {
+            ItemtoEdit?.removeNotification()
             item.name=textField.text!
             item.colorString = colortoAdd
             let leftTime = Int(datePicker.countDownDuration)
             item.leftTime = leftTime
-            item.TimeText = "倒计时：\(leftTime/60)min 后提醒"
+            item.TimeInterval = datePicker.countDownDuration
+            if item.leftTime > 0 {item.TimeOut = false}
             delegate?.AddItemDetailerController(self, didFinishEditing: item)
         }
         else {
-            let item = DoneItem(name: textField.text!)
+            let item = Item(name: textField.text!)
             let leftTime = Int(datePicker.countDownDuration)
             item.colorString = colortoAdd
-            item.leftTime=leftTime
-            item.TimeText = "倒计时：\(leftTime/60)min 后提醒"
+            item.leftTime = leftTime
+            item.TimeInterval = datePicker.countDownDuration
             delegate?.AddItemDetailerController(self, didFinishAdding: item)
         }
     }

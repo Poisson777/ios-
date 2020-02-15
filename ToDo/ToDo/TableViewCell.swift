@@ -7,15 +7,11 @@
 //
 
 import UIKit
-protocol TimeCountDownDelegate:class{
-    func MoveItem(_ CountDownFinishCell:TableViewCell,CountEndItem:DoneItem)
-}
 class TableViewCell: UITableViewCell{
     var nameLabel:UILabel?
     var circleView:UIView!
     var timeLabel:UILabel?
     var leftTime = 0
-    weak var delegate:TimeCountDownDelegate!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -44,10 +40,15 @@ class TableViewCell: UITableViewCell{
         self.addSubview(nameLabel!)
         self.addSubview(timeLabel!)
     }
-    func setValueForCell(item:DoneItem){
+    func setValueForCell(item:Item){
         nameLabel!.text=item.name
         leftTime = item.leftTime
-        timeLabel!.text="倒计时：\(leftTime/60) min \(leftTime%60) second 后提醒"
+        if item.leftTime > 0 {
+            timeLabel!.text = "倒计时：\(leftTime/60) min \(leftTime%60) s 后提醒"
+        }
+        else {
+            timeLabel?.text = "已完成"
+        }
         switch item.colorString{
         case "blue" :
             circleView.backgroundColor = UIColor.systemBlue
@@ -61,6 +62,15 @@ class TableViewCell: UITableViewCell{
             circleView.backgroundColor = UIColor.systemYellow
         default :
             circleView.backgroundColor = UIColor.white
+        }
+    }
+    func setCountTime(item:Item){
+        self.leftTime = item.leftTime
+        if item.leftTime > 0 {
+            timeLabel!.text = "倒计时：\(leftTime/60) min \(leftTime%60) s 后提醒"
+        }
+        else {
+            timeLabel?.text = "已完成"
         }
     }
 }
