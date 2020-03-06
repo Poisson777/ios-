@@ -14,11 +14,6 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        let navigationController = window!.rootViewController as! UINavigationController
-//        let controller = navigationController.viewControllers[0] as! TodoViewController
-//            controller.items = items
-//
         registerNotifications(application)
         return true
     }
@@ -30,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             center.delegate = self as? UNUserNotificationCenterDelegate
             center.getNotificationSettings { (setting) in
                 if setting.authorizationStatus == .notDetermined{
-                    // 未注册
                     center.requestAuthorization(options: [.badge,.sound,.alert]) { (result, error) in
                         print("显示内容：\(result) error：\(String(describing: error))")
                         if(result){
@@ -43,11 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                         }
                     }
                 } else if (setting.authorizationStatus == .denied){
-                    //用户已经拒绝推送通知
-                    //-- 弹出页面提示用户去显示
                     
                 }else if (setting.authorizationStatus == .authorized){
-                    //已注册 已授权 --注册同志获取 token
+                    
                     self.registerForRemoteNotifications()
                 }else{
                     

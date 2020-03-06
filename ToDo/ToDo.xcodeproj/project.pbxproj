@@ -14,7 +14,7 @@
 		EE590D6723D4756E00FB0540 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE590D6523D4756E00FB0540 /* Main.storyboard */; };
 		EE590D6923D4757100FB0540 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE590D6823D4757100FB0540 /* Assets.xcassets */; };
 		EE590D6C23D4757100FB0540 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE590D6A23D4757100FB0540 /* LaunchScreen.storyboard */; };
-		EE9B6F1723D8130B005EB714 /* EditAddingItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B6F1623D8130B005EB714 /* EditAddingItemDetailViewController.swift */; };
+		EE9B6F1723D8130B005EB714 /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B6F1623D8130B005EB714 /* EditItemViewController.swift */; };
 		EEAA271823F43585004983D9 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAA271723F43585004983D9 /* DataModel.swift */; };
 		EEB0471D23D5978000C82F9E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB0471C23D5978000C82F9E /* Item.swift */; };
 /* End PBXBuildFile section */
@@ -29,7 +29,7 @@
 		EE590D6823D4757100FB0540 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE590D6B23D4757100FB0540 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE590D6D23D4757100FB0540 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE9B6F1623D8130B005EB714 /* EditAddingItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddingItemDetailViewController.swift; sourceTree = "<group>"; };
+		EE9B6F1623D8130B005EB714 /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
 		EEAA271723F43585004983D9 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		EEB0471C23D5978000C82F9E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,7 +70,7 @@
 				EEAA271723F43585004983D9 /* DataModel.swift */,
 				EEB0471C23D5978000C82F9E /* Item.swift */,
 				EE590D6523D4756E00FB0540 /* Main.storyboard */,
-				EE9B6F1623D8130B005EB714 /* EditAddingItemDetailViewController.swift */,
+				EE9B6F1623D8130B005EB714 /* EditItemViewController.swift */,
 				EE590D6D23D4757100FB0540 /* Info.plist */,
 				EE590D6123D4756E00FB0540 /* SceneDelegate.swift */,
 				EE590D6823D4757100FB0540 /* Assets.xcassets */,
@@ -155,7 +155,7 @@
 				EE590D6023D4756E00FB0540 /* AppDelegate.swift in Sources */,
 				EEB0471D23D5978000C82F9E /* Item.swift in Sources */,
 				EE4F902523E7FDCB00CE732D /* TableViewCell.swift in Sources */,
-				EE9B6F1723D8130B005EB714 /* EditAddingItemDetailViewController.swift in Sources */,
+				EE9B6F1723D8130B005EB714 /* EditItemViewController.swift in Sources */,
 				EE590D6223D4756E00FB0540 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

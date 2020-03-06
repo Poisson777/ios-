@@ -10,7 +10,7 @@ import Foundation
 import UserNotifications
 class Item:NSObject,Codable,NSCoding{
     var name:String = ""
-    var leftTime:Int = 5
+    var leftTime:Int = 1
     var colorString:String = ""
     var TimeOut:Bool = false
     var TimeInterval:TimeInterval = 0
@@ -21,7 +21,7 @@ class Item:NSObject,Codable,NSCoding{
     }
     required init(coder decoder:NSCoder){
         self.name = decoder.decodeObject(forKey: "Name") as! String
-        self.leftTime = decoder.decodeInteger(forKey: "LeftTime") 
+        self.leftTime = decoder.decodeInteger(forKey: "LeftTime")
         self.TimeOut = decoder.decodeBool(forKey: "TimeOut")
         self.colorString = decoder.decodeObject(forKey: "ColorString") as! String
     }
@@ -38,7 +38,6 @@ class Item:NSObject,Codable,NSCoding{
     }
     func countDown(){
         leftTime = leftTime - 1
-        print("\(leftTime)")
     }
     func scheduleNotification(){
         if !TimeOut {

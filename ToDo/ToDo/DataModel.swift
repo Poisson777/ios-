@@ -26,7 +26,7 @@ class DataModel :NSObject{
             let dataArray :NSMutableArray = []
             for item in items[0]! {
                 do {
-                    let data = try NSKeyedArchiver.archivedData(withRootObject: item, requiringSecureCoding: false)
+                    let data = try NSKeyedArchiver.archivedData(withRootObject: item,requiringSecureCoding: false)
                     dataArray.add(data)
                     print("UnDoneDataSaveSuccess")
                 }catch {print("UndoneItemDataSaveError")}
@@ -56,7 +56,6 @@ class DataModel :NSObject{
                     do{
                         let item = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! Data) as! Item
                         items[0]?.append(item)
-                        print("UndoneItemLoadSuccess")
                     }catch{print("UndoneItemLoadError")}
                 }
             }
@@ -67,7 +66,6 @@ class DataModel :NSObject{
                     do{
                         let item = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data as! Data) as! Item
                         items[1]?.append(item)
-                        print("DoneItemLoadSuccess")
                     }catch{print("DoneItemLoadError")}
                 }
             }

@@ -12,10 +12,6 @@ class TableViewCell: UITableViewCell{
     var circleView:UIView!
     var timeLabel:UILabel?
     var leftTime = 0
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
@@ -27,7 +23,6 @@ class TableViewCell: UITableViewCell{
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
     func creatCell(){
         nameLabel = UILabel.init(frame: CGRect(x: 35, y: 0, width: 500, height:50))
         timeLabel = UILabel.init(frame: CGRect(x: 35, y:30, width: 500, height: 30))
@@ -64,10 +59,13 @@ class TableViewCell: UITableViewCell{
             circleView.backgroundColor = UIColor.white
         }
     }
-    func setCountTime(item:Item){
+    func refreshTime(item:Item){
         self.leftTime = item.leftTime
-        if item.leftTime > 0 {
+        if item.leftTime > 0 && item.leftTime<3600 {
             timeLabel!.text = "倒计时：\(leftTime/60) min \(leftTime%60) s 后提醒"
+        }
+        else if item.leftTime >= 3600{
+            timeLabel!.text = "倒计时：\(leftTime/3600) hour \(leftTime%3600/60) min \(leftTime%60) s 后提醒"
         }
         else {
             timeLabel?.text = "已完成"

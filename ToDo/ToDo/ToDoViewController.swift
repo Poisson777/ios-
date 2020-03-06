@@ -17,32 +17,34 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var TopCell = UICollectionViewCell(frame: CGRect(x: 0, y: 80, width: 500, height:80 ))
     
     var ItemtoEdit:Item?
-    let undoneitem1 = Item(name: "未完成1",LeftTime: 5)
-    let undoneitem2 = Item(name: "未完成2",LeftTime: 3)
-    let doneitem1=Item(name:"已完成1",LeftTime: 0)
-    var items:DataModel = DataModel()
+    var timer:Timer!
+    
+    var datamodel:DataModel = DataModel()
     let userDefault = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         FirstTableView.delegate = self
         FirstTableView.dataSource = self
         setUI()
-        items.loadData()
+        datamodel.loadData()
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBack), name: UIApplication.didEnterBackgroundNotification, object: nil)
-//        items.loadData()
-                timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(TodoViewController.timerEvent), userInfo: nil, repeats:true)
-        // Do any additional setup after loading the view.
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(TodoViewController.timerEvent), userInfo: nil, repeats:true)
+//        var timer :DispatchSourceTimer?
+//        timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.global()) as DispatchSourceTimer
+//        timer?.schedule(wallDeadline: DispatchWallTime.now(), repeating: DispatchTimeInterval.seconds(1))
+//        timer?.setEventHandler(handler: [self] in
+//            self.timerEvent())
+        
+        datamodel.items[0]?.append(Item(name: "dsaj"))
     }
     @objc func didEnterBack(){
         let stopTime = Date()
         UserDefaults.standard.removeObject(forKey: "StopTime")
         UserDefaults.standard.set(stopTime, forKey: "StopTime")
+        print("StopTime save success ")
     }
     @objc func didBecomeActive(){
-        caculateTime()
-    }
-    func caculateTime(){
         let StopTime = UserDefaults.standard.object(forKey: "StopTime")
         if StopTime != nil{
             let stopTime = StopTime as! Date
@@ -51,25 +53,28 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     func setUI(){
-        AddButton.isEnabled = false
+        AddButton.titleLabel?.font = UIFont.systemFont(ofSize: 40)
         AddButton.setTitle("+", for:.normal)
         AddButton.setTitleColor(UIColor.systemGray, for: .normal)
-        AddButton.titleLabel?.font = UIFont.systemFont(ofSize: 40)
+        AddButton.isEnabled = false
+        AddButton.addTarget(self, action: #selector(clickAddButton), for: .touchUpInside)
+        
+        AddTextField.delegate = self
         AddTextField.borderStyle = .roundedRect
         AddTextField.placeholder = "请输入所要添加的事件标题"
-        FirstTableView.delegate = self
-        FirstTableView.dataSource = self
-        AddTextField.delegate = self
-        AddButton.addTarget(self, action: #selector(clickAddButton), for: .touchUpInside)
+        
         TopCell.addSubview(AddButton)
         TopCell.addSubview(AddTextField)
         TopCell.backgroundColor=UIColor.white
         self.view.addSubview(TopCell)
         self.view.addSubview(FirstTableView)
+        
+        FirstTableView.delegate = self
+        FirstTableView.dataSource = self
         FirstTableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.items[section]!.count
+        return datamodel.items[section]!.count
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -97,18 +102,24 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = TableViewCell(style: .default, reuseIdentifier: "cell")
-        let cellItem=items.getItem(section: indexPath.section, row: indexPath.row)
+        let cellItem=datamodel.getItem(section: indexPath.section, row: indexPath.row)
         cell.setValueForCell(item: cellItem)
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        items.items[indexPath.section]?.remove(at: indexPath.row)
+        
+        datamodel.items[indexPath.section]![indexPath.row].removeNotification()
+        
+        datamodel.items[indexPath.section]?.remove(at: indexPath.row)
+        
+        datamodel.saveData()
+        
         let indexPaths=[indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        ItemtoEdit = items.getItem(section: indexPath.section, row: indexPath.row)
+        ItemtoEdit = datamodel.getItem(section: indexPath.section, row: indexPath.row)
         performSegue(withIdentifier: "EditItem", sender: nil)
         FirstTableView.deselectRow(at: indexPath, animated: true)
     }
@@ -117,7 +128,12 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let stringRange = Range(range,in: oldText)!
         let newText = oldText.replacingCharacters(in: stringRange, with: string)
         AddButton.isEnabled = !newText.isEmpty
-        AddButton.setTitleColor(UIColor.systemBlue, for: .normal)
+        if AddButton.isEnabled {
+            AddButton.setTitleColor(UIColor.systemBlue, for: .normal)
+        }
+        else {
+            AddButton.setTitleColor(UIColor.systemGray, for: .normal)
+        }
         return true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -133,7 +149,7 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItem"{
-            let controller = segue.destination as!EditAddingItemDetailViewController
+            let controller = segue.destination as!EditItemViewController
             controller.delegate=self
             controller.TitletoAdd = AddTextField.text!
             AddTextField.text=""
@@ -141,33 +157,33 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             AddButton.setTitleColor(UIColor.systemGray, for: .normal)
         }
         else if segue.identifier=="EditItem"{
-            let controller = segue.destination as! EditAddingItemDetailViewController
+            let controller = segue.destination as! EditItemViewController
             controller.delegate = self
             controller.ItemtoEdit = ItemtoEdit
         }
     }
     
-    func AddItemDetailerViewControllerDidCancel(_ controller: EditAddingItemDetailViewController) {
+    func ItemDetailerViewControllerDidCancel(_ controller: EditItemViewController) {
         navigationController?.popViewController(animated: true)
     }
-    func AddItemDetailerController(_ controller: EditAddingItemDetailViewController, didFinishAdding ItemtoEdit: Item) {
-        let newRowIndex = items.items[0]!.count
-        items.items[0]?.append(ItemtoEdit)
+    func AddItemDetailerController(_ controller: EditItemViewController, didFinishAdding ItemtoEdit: Item) {
+        let newRowIndex = datamodel.items[0]!.count
+        datamodel.items[0]?.append(ItemtoEdit)
         ItemtoEdit.scheduleNotification()
-        items.toItem = ItemtoEdit
+        datamodel.toItem = ItemtoEdit
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         FirstTableView.insertRows(at: indexPaths, with: .automatic)
         navigationController?.popViewController(animated: true)
     }
-    func AddItemDetailerController(_ controller: EditAddingItemDetailViewController, didFinishEditing item: Item) {
+    func EditItemDetailerController(_ controller: EditItemViewController, didFinishEditing item: Item) {
         item.scheduleNotification()
-        if let index = items.items[0]?.firstIndex(of:item){
+        if let index = datamodel.items[0]?.firstIndex(of:item){
             let indexPath = IndexPath(row:index,section: 0)
             let cell = FirstTableView.cellForRow(at: indexPath) as! TableViewCell
             cell.setValueForCell(item: item)
         }
-        else if let index = items.items[1]?.firstIndex(of:item){
+        else if let index = datamodel.items[1]?.firstIndex(of:item){
             let indexPath = IndexPath(row: index, section: 1)
             let cell = FirstTableView.cellForRow(at: indexPath) as! TableViewCell
             cell.setValueForCell(item:item)
@@ -178,34 +194,33 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         navigationController?.popViewController(animated: true)
     }
     func MoveItem(item:Item,from oldSection:Int,to newSection:Int){
-        if let oldIndex = items.items[oldSection]?.firstIndex(of:item){
-            items.items[oldSection]?.remove(at: oldIndex)
+        if let oldIndex = datamodel.items[oldSection]?.firstIndex(of:item){
+            datamodel.items[oldSection]?.remove(at: oldIndex)
             let indexPath = IndexPath(row: oldIndex, section: oldSection)
             let indexPaths = [indexPath]
             FirstTableView.deleteRows(at: indexPaths, with: .automatic)
         }
-        let newIndex = items.items[newSection]!.count
-        items.items[newSection]?.append(item)
+        let newIndex = datamodel.items[newSection]!.count
+        datamodel.items[newSection]?.append(item)
         let newIndexPath = IndexPath(row: newIndex, section: newSection)
         let indexPaths = [newIndexPath]
         FirstTableView.insertRows(at: indexPaths, with: .automatic)
     }
-    var timer:Timer!
     @objc func timerEvent(){
         timeCountDown(with: 1)
     }
     func timeCountDown(with interval:Int){
-        for item in items.items[0]! {
+        for item in datamodel.items[0]! {
             if !item.TimeOut{
                 if interval == 1{
                     item.countDown()}
                 else {
                     item.leftTime += interval
                 }
-                if let index = items.items[0]?.firstIndex(of:item){
+                if let index = datamodel.items[0]?.firstIndex(of:item){
                     let indexPath = IndexPath(row:index,section: 0)
                     let cell = FirstTableView.cellForRow(at: indexPath) as!TableViewCell
-                    cell.setCountTime(item: item)
+                    cell.refreshTime(item: item)
                 }
                 if item.leftTime <= 0{
                     item.TimeOut = true
