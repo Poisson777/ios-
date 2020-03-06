@@ -30,13 +30,6 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBack), name: UIApplication.didEnterBackgroundNotification, object: nil)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(TodoViewController.timerEvent), userInfo: nil, repeats:true)
-//        var timer :DispatchSourceTimer?
-//        timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.global()) as DispatchSourceTimer
-//        timer?.schedule(wallDeadline: DispatchWallTime.now(), repeating: DispatchTimeInterval.seconds(1))
-//        timer?.setEventHandler(handler: [self] in
-//            self.timerEvent())
-        
-        datamodel.items[0]?.append(Item(name: "dsaj"))
     }
     @objc func didEnterBack(){
         let stopTime = Date()
